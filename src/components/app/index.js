@@ -1,6 +1,10 @@
 import React, {Component} from 'react';
-import Header from '../header/index';
-import RandomPlanet from '../random-planet/index';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route 
+} from "react-router-dom";
+import Layout from '../layout/index';
 import SwapiService from '../../services/swapi-service';
 import {
   SwapiServiceProvider
@@ -8,9 +12,13 @@ import {
 import PeoplePage from '../pages/people-page';
 import PlanetPage from '../pages/planet-page';
 import StarshipPage from '../pages/starship-page';
+import StarshipInformation from '../info/starship-info'
 
 import './app.css';
 
+const MainPage = () => {
+  return <h1> Hello, friend!</h1>
+}
 
 export default class App extends Component {
 
@@ -33,18 +41,26 @@ export default class App extends Component {
       }
     })
   }
+  
 
   render() {
 
     return (
       <SwapiServiceProvider value={this.state.swapiService}>
-        <div className='sw-app'>
-          <Header onServiceChange={this.onServiceChange}/>
-          <RandomPlanet />
-          <PeoplePage/>
-          <PlanetPage/>
-          <StarshipPage/>          
-        </div>
+        <Router>
+          <div className='sw-app'>
+            {/* <Header onServiceChange={this.onServiceChange}/> */}
+            <Routes>
+              <Route path='/' element={<Layout onServiceChange={this.onServiceChange}/>}>
+                <Route path='/' element={<MainPage/>} />
+                <Route path='peoples' element={<PeoplePage/>} />
+                <Route path='planets' element={<PlanetPage/>} />
+                <Route path='starships' element={<StarshipPage/>} />
+                <Route path=':category/:id' element={<StarshipInformation/>} />
+              </Route>
+            </Routes>
+          </div>
+        </Router>
        </SwapiServiceProvider>
     );
   } 

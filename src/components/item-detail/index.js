@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
+import {Link} from 'react-router-dom'
 import SwapiService from '../../services/swapi-service';
+import StarshipInformation from '../info/starship-info';
+import Spinner from '../spinner';
 
 import './item-detail.css';
 
@@ -71,30 +74,35 @@ export default class ItemDetails extends Component {
   }
 
   render() {
-    const { item, image } = this.state;
+    const { item, image, loading } = this.state;
     
     if (!image) {
       return <span>Select a item from a list</span>;
     }
-    const { name } = item    
-
+    if (loading) {
+      return <Spinner/>
+    }
+    const { name, id } = item   
+    console.log(item) 
+    
     return (
-      <div className="item-details card">
-         <img className="item-image"
-          alt='item'
-          src={image} />
-
-        <div className="card-body">
-          <h4>{ name }</h4>
-          <ul className="list-group list-group-flush">
-            { 
-              React.Children.map(this.props.children, (child) =>{
-                return React.cloneElement(child, { item })
-              }) 
-            }
-          </ul>
+      <Link to={`${id}`} >
+        <div className="item-details card">
+          <img className="item-image"
+            alt='item'
+            src={image} />
+          <div className="card-body">
+            <h4>{ name }</h4>
+            <ul className="list-group list-group-flush">
+              { 
+                React.Children.map(this.props.children, (child) =>{
+                  return React.cloneElement(child, { item })
+                }) 
+              }
+            </ul>
+          </div>
         </div>
-      </div>
+      </Link>
     )
   }
 }

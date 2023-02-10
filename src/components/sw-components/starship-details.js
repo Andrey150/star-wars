@@ -3,16 +3,17 @@ import ItemDetails, { Record} from '../item-detail';
 import withSwapiService  from '../hoc-helpers/with-swapi-service'
 
 const StarshipDetails = ( props ) => {
-  
   return (
-    <ItemDetails 
-      {...props}
-    >
-      <Record field='name' label='Name' /> 
-      <Record field='model' label='Model' />
-      <Record field='length' label='Length' />
-      <Record field='costInCredit' label='Cost' />
-    </ItemDetails>
+    
+      <ItemDetails 
+        {...props}
+      >
+          <Record field='name' label='Name' /> 
+          <Record field='model' label='Model' />
+          <Record field='length' label='Length' />
+          <Record field='costInCredit' label='Cost' />
+      </ItemDetails>
+
   )
 }; 
 
